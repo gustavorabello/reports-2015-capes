@@ -153,7 +153,7 @@ as seções pela temática da metodogia, a saber: Equações de Governo,
 Método de Elementos Finitos, Discretização do Termo de Tensão
 Superficial e Solução do Sistema Linear.
 
-\subsection{Equações de Governo}
+\subsection{Equações de Governo - 3 dimensões}
 O princípio de conservação de massa estabelece que, dado um fluido
 qualquer com massa específica $\rho$ que escoa através de um volume de
 controle $V$ invariante no tempo, a taxa de acumulação de massa no
@@ -248,6 +248,87 @@ pouquíssmimos casos práticos, onde muitas simplificações são realizadas,
 utilizamos uma metodologia numérica de aproximação de solução para
 encontramos os valores dos campos $\vvet$, $p$ e $T$ em geometrias
 complexas que são pertinentes ao projeto proposto. 
+
+\subsection{Equações de Governo - Axissimétrico}
+Para o caso de um modelo bidimensional axissimétrico, faz-se a hipótese
+de que o escoamento é simetrico em torno do eixo longitudinal $z$ em um
+sistema de coordenadas cilindricas $(r,\theta,z)$. Matematicamente, esta
+hipótese tradui-se como $d/d\theta=0$ onde $\theta$. Com esta hipótese
+de simetria e a utilização do sistema de coordenadas cilíndricas, as
+equações de conservação de quantidade de movimento linear para as duas
+componentes $r$ e $z$ tomam a forma de:
+
+\begin{equation}
+	\frac{\partial v_r}{\partial t} + \vvet \cdot \nabla v_r
+	= 
+	- \frac{1}{\rho} \frac{\partial p}{\partial r} +
+	\nabla \cdot [\nu(\nabla v_r + \nabla v_r^T - \frac{v_r}{r^2})] 
+	+ 
+	f_r
+\label{eq:NSAxi1}
+\end{equation}
+\begin{equation}
+	\frac{\partial v_z}{\partial t} + \vvet \cdot \nabla v_z
+	= 
+	- \frac{1}{\rho} \frac{\partial p}{\partial z} +
+	\nabla \cdot [\nu(\nabla v_z + \nabla v_z^T)] + 
+	g_z 
+	+ 
+	f_z
+\label{eq:NSAxi}
+\end{equation}
+
+Para a inclusão da hipótese de simetria na equação de conservação de
+massa, é necessário incluir um termo da componente de velocidade $v_r$
+dividido pelo raio $r$ e que para um sistema bifásico toma a forma de:
+
+\begin{equation}
+	\frac{\partial v_r}{\partial r}
+	+
+	\frac{v_r}{r}
+	+
+	\frac{\partial v_z}{\partial z}  
+	= 
+	0
+	\label{eq:cm9}
+\end{equation}
+
+O operador laplaciano $\nabla^2$ é representado por:
+
+\begin{equation}
+	\nabla^2 
+	=
+	\frac{\partial^2}{\partial r^2}
+	+
+	\frac{1}{r}
+	\frac{\partial}{\partial r}
+	+
+	\frac{\partial^2}{\partial z^2}
+\label{eq:laplacianAxi}
+\end{equation}
+
+O termo que representa a força de tensão superficial $(\mathbf{f}(f_r,f_z)$ é
+modelado com através do método de modelagem da força de tensão
+superfical contínua sugerido por \cite{brackbill1992}:
+
+\begin{equation}
+	\mathbf{f} = \sigma \kappa \nvet \delta 
+\label{eq:brackbill}
+\end{equation}
+
+Entretanto, para o correto cálculo da tensão superficial em um modelo
+axissimétrico, se faz necessária a inclusão da curvatura na direção de
+rotação do eixo de simetria $r$, ou seja, a curvatura referente à
+direção de $\theta$:
+
+\begin{equation}
+	\kappa = \kappa_{2D} + \frac{sen(\phi)}{r}
+\label{eq:curvAxi}
+\end{equation}
+
+\noident onde $r$ é a distância do elemento infinitesimal do campo ao
+eixo de simetria $z$ através da reta paralela ao vetor normal da
+interface entre os dois fluidos.
 
 \subsection{Método de Elementos Finitos}
 Nos anos 50, o método de elementos finitos teve grande utilização na
