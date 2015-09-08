@@ -17,6 +17,7 @@ $(PDFFILE): main.tex
 clean:
 	@rm -vf *.aux *.glo *.gls *.glg *.dvi *.ps *.out *.brf *.ist *.spl
 	@rm -vf *.lo[gtfa] *.toc *.idx *.inc *.ilg *.ind *.bbl *.blg *.backup
+	@rm -vf *.maf *.mtc *.mtc?
 	@find . -name "*.log" -exec rm -fv {} \;
 	@find . -name "*.bak" -exec rm -fv {} \;
 	@find . -name "*~" -exec rm -fv {} \;

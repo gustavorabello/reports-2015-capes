@@ -13,7 +13,7 @@
 \usepackage{graphicx}    % pacote para inclusao de figuras,
 \usepackage{subfig}
 %\pagestyle{empty}
-\usepackage{makeidx,indentfirst}
+\usepackage{indentfirst}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 % removing reference name
@@ -42,10 +42,11 @@
 \newcommand{\Mo}{\mathrm{Mo}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%  MACROS MATEMATICOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makeindex
-										    
 \begin{document}	
 \input{./title.tex}
+
+\tableofcontents
+\newpage
 
 \section{Identificação}
 
@@ -85,7 +86,7 @@ Após 19 meses de projeto CAPES - Bolsa de Atração de Jovens
 Talentos, os objetivos e metas previstos para este período foram
 realizados com sucesso. Este documento descreve os resultados obtidos
 pelo pesquisador bolsista Gustavo Rabello dos Anjos no projeto
-entitulado "Sistema de Simulação Numérica de Escoamentos Multifásicos". 
+intitulado "Sistema de Simulação Numérica de Escoamentos Multifásicos". 
 \clearpage
 
 \section{Introdução}
@@ -112,18 +113,19 @@ método de elementos finitos. Para execução do projeto proposto,
 planeja-se concluir o desenvolvimento do simulador para modelos
 tridimensionais e axisimétricos através da incorporação das seguintes
 características: paralelização dos núcleos de cálculo intensivo em
-clusters baseados em processadores de vários núcleos (multicore),
-extensa validação do modelo numérico através de validações analíticas e
-experimentais, este último com colaboração internacional, e publicação
-dos resultados em canais de comunicação internacionais de excelência.
-Com isso, objetiva-se o aperfeiçoamento das técnicas computacionais
-empregadas na instituição de execução do projeto (UERJ/GESAR),
-consolidando o Programa de Pós-graduação em Engenharia Mecânica na UERJ,
-e a formação de recusos humanos, com aperfeiçoamento pessoal de nível
-superior e pós-graduação. Os indicadores de desempenho que serão
-utilizados no projeto estão baseados em publicações produzidas pelo
-bolsista na UERJ, juntamente com o aluno envolvido na bolsa de IC, e
-submetidos a avaliações da comunidade científica.
+\textit{clusters} baseados em processadores de vários núcleos (
+\textit{multicore}), extensa validação do modelo numérico através de
+validações analíticas e experimentais, este último com colaboração
+internacional, e publicação dos resultados em canais de comunicação
+internacionais de excelência. Com isso, objetiva-se o aperfeiçoamento
+das técnicas computacionais empregadas na instituição de execução do
+projeto (UERJ/GESAR), consolidando o Programa de Pós-graduação em
+Engenharia Mecânica na UERJ, e a formação de recursos humanos, com
+aperfeiçoamento pessoal de nível superior e pós-graduação. Os
+indicadores de desempenho que serão utilizados no projeto estão baseados
+em publicações produzidas pelo bolsista na UERJ, juntamente com o aluno
+envolvido na bolsa de iniciação científica (IC), e submetidos a
+avaliações da comunidade científica.
 
 \section{Objetivos}
 
@@ -142,12 +144,13 @@ submetidos a avaliações da comunidade científica.
 		  para simulação numérica de estrutura de não-equilíbrio em
 		  sistemas químicos, biológico e ambientais;
 	\item incorporação das seguintes características ao simulador numérico:
-		  paralelisação dos núcleos de cálculo intensivo em clusters
-		  baseados em processadores de vários núcleos (multicore),
-		  através do desenvolvimento de novos precondicionadores para a
-		  aceleração dos métodos iterativos implantados e validação do
-		  modelo proposto através de soluções analíticas e experimentais
-		  (com participação de universidades internacionais);
+		  paralelização dos núcleos de cálculo intensivo em
+		  \textit{clusters} baseados em processadores de vários núcleos
+		  (\textit{multicore}), através do desenvolvimento de novos
+		  precondicionadores para a aceleração dos métodos iterativos
+		  implantados e validação do modelo proposto através de soluções
+		  analíticas e experimentais (com participação de universidades
+		  internacionais);
 	\item publicação de resultados em canais de comunicação nacionais e
 	      internacionais renomados.
 \end{itemize}
@@ -155,15 +158,15 @@ submetidos a avaliações da comunidade científica.
 \section{Metodologia}
 
 Nesta seção, detalharemos a metodologia utilizada no desenvolvimento do
-simulador numérico de escoamentos multifásicos. Para tal, subdiviremos
-as seções pela temática da metodogia, a saber: Equações de Governo - 3
+simulador numérico de escoamentos multifásicos. Para tal, subdividiremos
+as seções pela temática da metodologia, a saber: Equações de Governo - 3
 dimensões, Equações de Governo - Axissimétrico,
 Método de Elementos Finitos, Discretização do Termo de Tensão
 Superficial e Solução do Sistema Linear.
 
 \subsection{Equações de Governo}
 
-\subsubsection{Modelo em 3 dimensões}
+\subsubsection{Modelo em três dimensões}
 
 O princípio de conservação de massa estabelece que, dado um fluido
 qualquer com massa específica $\rho$ que escoa através de um volume de
@@ -172,7 +175,7 @@ interior do volume é igual ao fluxo líquido de massa para fora do
 volume, em módulo. Para o problema proposto neste trabalho, onde não há
 variação da massa específica do fluido em cada fase, ou seja, a massa
 específica é constante em cada fase, a equação de conservação de massa
-representada em coordenadas cartesianas para 3 dimensões é escrita como:
+representada em coordenadas cartesianas para três dimensões é escrita como:
 
 \begin{equation}
 	\frac{\partial v_x}{\partial x} +
@@ -210,7 +213,7 @@ volume de controle V, a taxa de acumulação da quantidade de energia
 que entra no volume por unidade de tempo é igual ao fluxo
 líquido de massa para fora do volume, na ausência de termos relacionados
 ao trabalho e a dissipação toma a forma final representada em
-coordeandas cartesianas como:
+coordenadas cartesianas como:
 
 \begin{equation}
 	\frac{\partial T}{\partial t} + \vvet \cdot \nabla T
@@ -222,7 +225,7 @@ coordeandas cartesianas como:
 É conveniente adimensionalizarmos as equações de conservação acima
 citadas através de parâmetros conhecidos, como o diâmetro da bolha,
 diâmetro do canal de escoamento dos fluidos e velocidade de escoamento.
-Com isso analizamos os escoamentos através de números adimensionais que
+Com isso analisamos os escoamentos através de números adimensionais que
 podemos comparar com diversos problemas encontrados na literatura. As
 equações de conservação em sua forma final adimensionalizada são
 descritas como:
@@ -247,22 +250,23 @@ descritas como:
 	\label{eq:final3}
 \end{equation}\vspace{0.5cm}
 
-\noindent onde $Fr$ representa o número de Froud, $Re$ representa o
-número de Reynolds, $We$ representa o número de Weber e todas as outras
-variáveis estão eu sua forma adimensional.
+\noindent onde $Fr$ representa o número de \textit{Froud}, $Re$
+representa o número de \textit{Reynolds}, $We$ representa o número de
+\textit{Weber} e todas as outras variáveis estão eu sua forma
+adimensional.
 
 Para solução do problema de escoamentos multifásicos, procuramos então
 encontrar a solução dos campos de velocidade $\vvet$, pressão $p$ e
 temperatura $T$ enunciados nos três princípios de conservação descritos
 acima. Como a solução analítica destas equações são restritas a
-pouquíssmimos casos práticos, onde muitas simplificações são realizadas,
+pouquíssimos casos práticos, onde muitas simplificações são realizadas,
 utilizamos uma metodologia numérica de aproximação de solução para
 encontramos os valores dos campos $\vvet$, $p$ e $T$ em geometrias
 complexas que são pertinentes ao projeto proposto. 
 
 O termo que representa a força de tensão superficial
 $(\mathbf{f}(f_r,f_z)$ é calculado através do método de modelagem da
-força de tensão superfical contínua sugerido por \cite{brackbill1992}:
+força de tensão superficial contínua sugerido por \cite{brackbill1992}:
 
 \begin{equation}
 	\mathbf{f} = \sigma \kappa \nvet \delta 
@@ -277,9 +281,9 @@ posição da interface.
 \subsubsection{Modelo axissimétrico}
 
 Para o caso de um modelo bidimensional axissimétrico, faz-se a hipótese
-de que o escoamento é simetrico em torno do eixo longitudinal $z$ em um
-sistema de coordenadas cilindricas $(r,\theta,z)$. Matematicamente, esta
-hipótese tradui-se como $d/d\theta=0$ onde $\theta$. Com esta hipótese
+de que o escoamento é simétrico em torno do eixo longitudinal $z$ em um
+sistema de coordenadas cilíndricas $(r,\theta,z)$. Matematicamente, esta
+hipótese é escrita como $d/d\theta=0$ onde $\theta$. Com esta hipótese
 de simetria e a utilização do sistema de coordenadas cilíndricas, as
 equações de conservação de quantidade de movimento linear para as duas
 componentes $r$ e $z$ tomam a forma de:
@@ -359,18 +363,18 @@ Estas instabilidades estão fortemente ligadas a variações de viscosidade e
 densidade em camadas distintas de uma fase líquida contendo
 concentrações de soluto que afetam diretamente as propriedades do
 líquido. Este fenômeno ocorre em uma grande variedade de aplicações
-industriais, inclundo técnicas de sequestro de $CO_2$, hidrologia,
+industriais, incluindo técnicas de sequestro de $CO_2$, hidrologia,
 filtragem, cromatografia de líquidos e tantas outras. 
 
 No modelo proposto, considera-se o problema de geração de estruturas
-através de escoamento caracterizado por empuxo, gerado em
-meios porosos devido à dissolução de uma camada de líquido inicialmente
-posicionada sobre outra camada de líquido de densidade menor.
-Matematicamente, este modelo é governado pela lei de Darcy e a
-aproximação de Boussinesq para devida consideração dos efeitos de empuxo
-provocados pela diferença de densidade. As equações que descrevem a
-dinâmica e evolução do escoamento são apresentadas em uma formulação
-corrente-vorticidade com acoplamento da equação de concentração:
+através de escoamento caracterizado por empuxo, gerado em meios porosos
+devido à dissolução de uma camada de líquido inicialmente posicionada
+sobre outra camada de líquido de densidade menor. Matematicamente, este
+modelo é governado pela lei de Darcy e a aproximação de Boussinesq para
+devida consideração dos efeitos de empuxo provocados pela diferença de
+densidade. As equações que descrevem a dinâmica e evolução do escoamento
+são apresentadas em uma formulação corrente-vorticidade com acoplamento
+da equação de concentração:
 
 \begin{equation}
 	\nabla^2 \psi = -\omega_z
@@ -428,12 +432,12 @@ em um acoplamento entre velocidade e pressão desconhecidas.
 
 \subsection{Discretização do Termo de Tensão Superficial}
 
-Em códigos do tipo "front-tracking" a construção da interface é feita
+Em códigos do tipo \textit{front-tracking} a construção da interface é feita
 através de um conjunto de objetos geométricos, como triângulos,
-segmentos de reta e nós, que são movidos na forma de lagrangian, onde a
-malha tridimensional é fixada no espaço. Uma função adicional é necessária
+segmentos de reta e nós, que são movidos na forma lagrangiana, onde a
+malha tridimensional é fixa no espaço. Uma função adicional é necessária
 para comunicação entre as malhas, uma vez que não há nenhuma
-interconectividade implícita. esta abordagem mantém a interface entre as
+interconectividade implícita. Esta abordagem mantém a interface entre as
 fases com espessura zero, no qual uma representação precisa é obtida.
 Apesar de sua excelente definição geométrica , as propriedades do fluido
 perto da interface exigem tratamento numérico para evitar instabilidades
@@ -441,12 +445,12 @@ indesejáveis. Como consequência, estas propriedades são suavizados ao
 longo da zona de transição e a espessura nula já não pode ser mais
 garantida.
 
-Ao contrário de códigos do tipo "front-tracking", a malha da interface
+Ao contrário de códigos do tipo \textit{front-tracking}, a malha da interface
 faz parte da malha tridimensional. Com isso não há necessidade do uso de
 uma equação de transporte adicional ao modelo proposto. A malha
 3-dimensional compreende um conjunto de elementos tetraédricos
 distribuídos sobre o domínio e a interface é encontrado por uma função
-escalar, ou seja, uma função do tipo "Heaviside", que define os nós que
+escalar, ou seja, uma função do tipo \textit{Heaviside}, que define os nós que
 pertencem a cada uma das fases mais a interface em si. Para obter uma
 representação zero espessura, os nós da interface devem ser ligado de
 forma consistente para que sua discretização possa ser representado por
@@ -498,7 +502,7 @@ propriedade $\phi_2$ preenche exatamente os elementos de fase 2. Mesmo
 para uma razão de propriedade alta $\phi_1 / \phi_2 =$ 1000, a
 metodologia proposta aqui não apresenta oscilações espúrias nos campos
 de pressão e velocidade. Devido à formulação de elementos finitos, cada
-propriedade $\phi$ é atribuída en cada elemento tetraédrico, assim, uma
+propriedade $\phi$ é atribuída em cada elemento tetraédrico, assim, uma
 transição brusca de propriedades é obtida. Este procedimento de
 suavização é necessário para evitar instabilidades numéricas perto da
 interface.
@@ -511,9 +515,9 @@ bolhas e gotas. Entretanto, com o uso adequando de modelos geométricos
 pode-se modelar a separação e colapso de duas interfaces distintas. Por
 exemplo, quando a espessura do filme de líquido que separa duas bolhas
 diminui até um determinado valor, as superfícies das bolhas são
-conectadas e obtem-se a coalescência das bolhas. Apesar das mudanças
+conectadas e obtém-se a coalescência das bolhas. Apesar das mudanças
 topológicas ocorrerem, os aspectos físicos do problema não são
-solucionados. É fato que o problema físico de coalescencia de bolhas e
+solucionados. É fato que o problema físico de coalescência de bolhas e
 quebra de interface ainda é tema de pesquisas atuais.
 
 Uma formulação baseada em elementos finitos pode ser encontrada para a
@@ -531,56 +535,76 @@ elementos $\sigma \kappa_1, \sigma \kappa_2, \sigma \kappa_3,$ $\cdots,
 \sigma \kappa_{NV}$, onde $NV$ é o número total de nós da malha
 relativos ao campo de pressão. A matriz $\mathbf{G}$ representa a forma
 discreta do operador gradiente $\nabla$ e $H_{\lambda}$ é o função
-discreta "Heaviside". Equação~(\ref{eq:surfDiscrete}) pode ser substuída
-na forma discreta da equação de conservação de quantidade de movimento e
-o termo de tensão superficial pode então ser calculado. 
+discreta \textit{Heaviside}. Equação~(\ref{eq:surfDiscrete}) pode ser
+substituída na forma discreta da equação de conservação de quantidade de
+movimento e o termo de tensão superficial pode então ser calculado. 
 
 \section{Atividades Desenvolvidas pelo Bolsista JVT e Bolsista IC}
 
 Pelo beneficiário da bolsa de Atração de Jovens Talentos: Gustavo Rabello
 dos Anjos
 \begin{itemize}
-\item estudo e desenvolvimento de modelo em três dimensões e axisimétrico
-para escoamentos multifásicos;
-\item estudo de escoamentos multifásicos com ondas capilares em bolhas
-submetidas a campo de temperatura variável;
-\item realização de experimentos computacionais e laboratoriais de
-decomposição de biomassa e produção de gases com sedimentação de
-material orgânico; de medição da sedimentação/ressuspensão e consumo de
-produtos;
-\item validação dos modelos desenvolvidos para sistemas existentes com
-utilização de tecnologia de última geração;
-\item estudo e desenvolvimento de modelos tridimensionais e axisimétricos
-para simulação numérica de estrutura de não-equilíbrio em sistemas
-químicos, biológico e ambientais;
-\item incorporação das seguintes características ao simulador numérico:
-paralelisação dos núcleos de cálculo intensivo em clusters baseados em
-processadores de vários núcleos (multicore), através do desenvolvimento
-de novos precondicionadores para a aceleração dos métodos iterativos
-implantados e validação do modelo proposto através de soluções
-analíticas e experimentais (com participação de universidades
-internacionais);
-\item publicação de resultados em canais de comunicação nacionais e
-internacionais renomados.
+	\item estudo e desenvolvimento de modelo em três dimensões e axisimétrico
+	para escoamentos multifásicos;
+	\item estudo de escoamentos multifásicos com ondas capilares em bolhas
+	submetidas a campo de temperatura variável;
+	\item realização de experimentos computacionais e laboratoriais de
+	decomposição de biomassa e produção de gases com sedimentação de
+	material orgânico; de medição da sedimentação/ressuspensão e consumo de
+	produtos;
+	\item validação dos modelos desenvolvidos para sistemas existentes com
+	utilização de tecnologia de última geração;
+	\item estudo e desenvolvimento de modelos tridimensionais e axisimétricos
+	para simulação numérica de estrutura de não-equilíbrio em sistemas
+	químicos, biológico e ambientais;
+	\item incorporação das seguintes características ao simulador numérico:
+	paralelização dos núcleos de cálculo intensivo em \textit{clusters}
+	baseados em processadores de vários núcleos (\textit{multicore}),
+	através do desenvolvimento de novos precondicionadores para a
+	aceleração dos métodos iterativos implantados e validação do modelo
+	proposto através de soluções analíticas e experimentais (com
+	participação de universidades internacionais);
+	\item publicação de resultados em canais de comunicação nacionais e
+	internacionais renomados.
 \end{itemize}
 
-Pelo beneficiário da bolsa de Iniciação Científida: Vinícius Augusto Cinquini Mascarenhas
+Pelos beneficiários da bolsa de Iniciação Científica: Vinícius Augusto
+Cinquini Mascarenhas e Paulo Roberto Berti Leite Filho
+
 \begin{itemize}
-\item Revisão bibliográfica pertinente ao projeto;
-\item familiarização com as técnicas desenvolvidas e implementadas no
-código numérico;
-\item execução de testes no código numérico;
-\item aumento da qualificação profissional do aluno de IC através de
-desenvolvimento e pesquisa.
-\item publicação de trabalho em congresso nacional/internacional.
+	\item Revisão bibliográfica pertinente ao projeto;
+	\item familiarização com as técnicas desenvolvidas e implementadas no
+	código numérico;
+	\item execução de testes no código numérico;
+	\item aumento da qualificação profissional do aluno de IC através de
+	desenvolvimento e pesquisa.
 \end{itemize}
 
 \section{Resultados Obtidos}
 
+Nesta seção, detalharemos os resultados obtidos através do
+desenvolvimento do simulador numérico de escoamentos multifásicos. Para
+tal, subdividiremos as seções pela temática da metodologia, a saber: 
+ 
+\begin{itemize}
+	\item Modelo em três dimensões: resultados obtidos através da
+	discretização das equações de conservação de massa, quantidade de
+	movimento e energia (temperatura) em três dimensões cartesianas;
+	\item Modelo axissimétrico: resultados obtidos através da
+	discretização das equações de conservação de massa e quantidade de
+	movimento para problemas com simetria axial;
+	\item Modelo de estruturas de não-equilíbrio em sistemas químicos:
+	resultados obtidos através da discretização da equação de Darcy em
+	uma formulação corrente-vorticidade e conservação de energia
+	(concentração).
+\end{itemize}
+
+\subsection{Modelo em três dimensões}
+
 Nesta seção buscamos apresentar algumas validações e resultados obtidos
 com o desenvolvimento do código de elementos finitos tridimensionais
 para simulação de escoamentos multifásicos. As
-Figs.~(\ref{fig:pressure3d}, \ref{fig:oscillating} e \ref{fig:sessile})
+figs.~(\ref{fig:pressure3d}, \ref{fig:oscillating} e \ref{fig:sessile})
 representam validações através de comparação com resultados analíticos.
 A Fig.~(\ref{fig:sucrose}) é resultado de simulação de bolha de ar
 imersa em uma solução de sacarose confinada em um canal vertical, movida
@@ -591,7 +615,7 @@ Fig.~(\ref{fig:sin}), mostra-se uma simulação numérica de escoamento
 multifásico de uma bolha de ar imersa em uma solução de glicerol em um
 canal com formato senoidal. Nele é possível notal que a bolha é
 comprimida e alongada devido a passagem em partes mais estreitas do
-canal seguinda de passagens com expansão. Futuras investigações serão
+canal seguida de passagens com expansão. Futuras investigações serão
 realizadas no âmbito do presente projeto CAPES.
 
  \begin{figure}[h]
@@ -610,7 +634,7 @@ realizadas no âmbito do presente projeto CAPES.
  	\end{center}
 	\caption{Amplitude de oscilação de uma gota. Comparação entre a
 	solução numérica através do método de elementos finitos e a solução
-	analítica para dois níveis de refinamento de mlaha. O período
+	analítica para dois níveis de refinamento de malha. O período
 	analítico é $0.785$ e a taxa de decaimento é mostrada pelas linhas
 	abaixo e acima da curva de oscilação. O período encontrado para a
 	malha grossa foi de $0.820$ enquanto que para a malha refinada foi
@@ -624,7 +648,7 @@ realizadas no âmbito do presente projeto CAPES.
  	\end{center}
 	\caption{Comparação entre a solução numérica do formato da gota
 	obtida e a solução
-	analítica correspondente para uma gota apoiada com simetrial axial.
+	analítica correspondente para uma gota apoiada com simetria axial.
 	A solução analítica é encontrada através da equação de capilaridade
 	de Young-Laplace.}
  	\label{fig:sessile} 
@@ -696,10 +720,36 @@ realizadas no âmbito do presente projeto CAPES.
 	\label{fig:sin} 
  \end{figure}
 
+\subsection{Modelo Axissimétrico}
+
+%--------------------------------------------------
+%  \begin{figure}[h!]
+%  	\begin{center}
+%  		\includegraphics[angle=0, scale=0.5]{figs/sessileShape.pdf}
+%  	\end{center}
+% 	\caption{Comparação entre a solução numérica do formato da gota
+% 	de Young-Laplace.}
+%  	\label{fig:axi1} 
+%  \end{figure}
+%-------------------------------------------------- 
+
+\subsection{Modelo de estruturas de não-equilíbrio em sistemas químicos}
+
+%--------------------------------------------------
+%  \begin{figure}[h!]
+%  	\begin{center}
+%  		\includegraphics[angle=0, scale=0.5]{figs/sessileShape.pdf}
+%  	\end{center}
+% 	\caption{Comparação entre a solução numérica do formato da gota
+% 	de Young-Laplace.}
+%  	\label{fig:chem} 
+%  \end{figure}
+%-------------------------------------------------- 
+
 \section{Produção Científica}
 
 Abaixo estão listados os artigos publicados em canais de comunicação
-internacional em que o pesquisador bolsista teve participação direta.
+internacional em que o pesquisador bolsista teve participação intensiva.
 
 \begin{itemize}
 	\item Finite Element Simulation of Fingering in Convective Dissolution in
@@ -770,7 +820,7 @@ bimestre foi iniciado o desenvolvimento do simulador numérico, onde
 novas funcionalidades foram incorporadas ao já existente código. É
 importante notar que o pesquisador bolsista desenvolveu, além de seu
 plano de trabalho inicial, um simulador de escoamentos bidimensional em
-linguagem de script PYTHON para uso acadêmico, que servirá de apoio nas
+linguagem de \textit{script} PYTHON para uso acadêmico, que servirá de apoio nas
 aulas ministradas por ele em cursos de graduação e pós-graduação.
 Diversos testes e validações foram realizados com sucesso e os
 resultados podem ser encontrados na seção de Resultados Obtidos, bem
