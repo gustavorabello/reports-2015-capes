@@ -9,10 +9,11 @@
 \usepackage{amsmath,booktabs}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}   % Font Encoding T1 - caracteres acentuados.
-\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
 \usepackage{graphicx}    % pacote para inclusao de figuras,
 \usepackage{subfig}
 %\pagestyle{empty}
+\usepackage{makeidx,indentfirst}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 % removing reference name
@@ -40,6 +41,8 @@
 \newcommand{\N}{\mathrm{N}}
 \newcommand{\Mo}{\mathrm{Mo}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%  MACROS MATEMATICOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeindex
 										    
 \begin{document}	
 \input{./title.tex}
@@ -77,6 +80,7 @@
 \clearpage
 
 \section{Resumo}
+
 Após 19 meses de projeto CAPES - Bolsa de Atração de Jovens
 Talentos, os objetivos e metas previstos para este período foram
 realizados com sucesso. Este documento descreve os resultados obtidos
@@ -85,6 +89,7 @@ entitulado "Sistema de Simulação Numérica de Escoamentos Multifásicos".
 \clearpage
 
 \section{Introdução}
+
 Deseja-se abordar o desenvolvimento e o estudo numérico de dois
 problemas atuais como continuidade de projetos de pesquisa e
 desenvolvimento realizados na Universidade do Estado do Rio de
@@ -121,6 +126,7 @@ bolsista na UERJ, juntamente com o aluno envolvido na bolsa de IC, e
 submetidos a avaliações da comunidade científica.
 
 \section{Objetivos}
+
 \begin{itemize}
 	\item estudo e desenvolvimento de modelo em três dimensões e axisimétrico
 	      para escoamentos multifásicos;
@@ -147,6 +153,7 @@ submetidos a avaliações da comunidade científica.
 \end{itemize}
 
 \section{Metodologia}
+
 Nesta seção, detalharemos a metodologia utilizada no desenvolvimento do
 simulador numérico de escoamentos multifásicos. Para tal, subdiviremos
 as seções pela temática da metodogia, a saber: Equações de Governo - 3
@@ -154,7 +161,10 @@ dimensões, Equações de Governo - Axissimétrico,
 Método de Elementos Finitos, Discretização do Termo de Tensão
 Superficial e Solução do Sistema Linear.
 
-\subsection{Equações de Governo - 3 dimensões}
+\subsection{Equações de Governo}
+
+\subsubsection{Modelo em 3 dimensões}
+
 O princípio de conservação de massa estabelece que, dado um fluido
 qualquer com massa específica $\rho$ que escoa através de um volume de
 controle $V$ invariante no tempo, a taxa de acumulação de massa no
@@ -171,7 +181,7 @@ representada em coordenadas cartesianas para 3 dimensões é escrita como:
 	= 
 	0
 	\label{eq:cm9}
-\end{equation}
+\end{equation}\vspace{0.5cm}
 
 Para obtenção das equações de conservação da quantidade de movimento
 linear para fluidos newtonianos realiza-se o mesmo procedimento de
@@ -192,7 +202,7 @@ dada por:
 	\textbf{g} + 
 	\textbf{f}
 \label{eq:NS3a}
-\end{equation}
+\end{equation}\vspace{0.5cm}
 
 O princípio do transporte de energia estabelece que, dado um
 fluido qualquer com massa específica $\rho$ que escoa através de um
@@ -238,8 +248,8 @@ descritas como:
 \end{equation}\vspace{0.5cm}
 
 \noindent onde $Fr$ representa o número de Froud, $Re$ representa o
-número de Reynolds e todas as outras variáveis estão eu sua forma
-adimensional.
+número de Reynolds, $We$ representa o número de Weber e todas as outras
+variáveis estão eu sua forma adimensional.
 
 Para solução do problema de escoamentos multifásicos, procuramos então
 encontrar a solução dos campos de velocidade $\vvet$, pressão $p$ e
@@ -250,7 +260,22 @@ utilizamos uma metodologia numérica de aproximação de solução para
 encontramos os valores dos campos $\vvet$, $p$ e $T$ em geometrias
 complexas que são pertinentes ao projeto proposto. 
 
-\subsection{Equações de Governo - Axissimétrico}
+O termo que representa a força de tensão superficial
+$(\mathbf{f}(f_r,f_z)$ é calculado através do método de modelagem da
+força de tensão superfical contínua sugerido por \cite{brackbill1992}:
+
+\begin{equation}
+	\mathbf{f} = \sigma \kappa \nvet \delta 
+\label{eq:brackbill}
+\end{equation}\vspace{0.5cm}
+
+\noindent onde $\sigma$ é o valor do coeficiente de tensão superficial,
+$\kappa$ representa a curvatura, $\nvet$ o vetor normal à superfície que
+separa os fluidos e $\delta$ representa uma função de identificação da
+posição da interface.
+
+\subsubsection{Modelo axissimétrico}
+
 Para o caso de um modelo bidimensional axissimétrico, faz-se a hipótese
 de que o escoamento é simetrico em torno do eixo longitudinal $z$ em um
 sistema de coordenadas cilindricas $(r,\theta,z)$. Matematicamente, esta
@@ -268,6 +293,7 @@ componentes $r$ e $z$ tomam a forma de:
 	f_r
 \label{eq:NSAxi1}
 \end{equation}
+
 \begin{equation}
 	\frac{\partial v_z}{\partial t} + \vvet \cdot \nabla v_z
 	= 
@@ -277,7 +303,7 @@ componentes $r$ e $z$ tomam a forma de:
 	+ 
 	f_z
 \label{eq:NSAxi}
-\end{equation}
+\end{equation}\vspace{0.5cm}
 
 Para a inclusão da hipótese de simetria na equação de conservação de
 massa, é necessário incluir um termo da componente de velocidade $v_r$
@@ -291,8 +317,8 @@ dividido pelo raio $r$ e que para um sistema bifásico toma a forma de:
 	\frac{\partial v_z}{\partial z}  
 	= 
 	0
-	\label{eq:cm9}
-\end{equation}
+	\label{eq:cm9-axi}
+\end{equation}\vspace{0.5cm}
 
 O operador laplaciano $\nabla^2$ é representado por:
 
@@ -306,32 +332,68 @@ O operador laplaciano $\nabla^2$ é representado por:
 	+
 	\frac{\partial^2}{\partial z^2}
 \label{eq:laplacianAxi}
-\end{equation}
+\end{equation}\vspace{0.5cm}
 
-O termo que representa a força de tensão superficial $(\mathbf{f}(f_r,f_z)$ é
-modelado com através do método de modelagem da força de tensão
-superfical contínua sugerido por \cite{brackbill1992}:
-
-\begin{equation}
-	\mathbf{f} = \sigma \kappa \nvet \delta 
-\label{eq:brackbill}
-\end{equation}
-
-Entretanto, para o correto cálculo da tensão superficial em um modelo
-axissimétrico, se faz necessária a inclusão da curvatura na direção de
-rotação do eixo de simetria $r$, ou seja, a curvatura referente à
-direção de $\theta$:
+O termo que representa a força de tensão superficial
+$(\mathbf{f}(f_r,f_z)$ é calculado através do mesmo método apresentado
+anteriormente para o modelo em três dimensões, entretanto, para o
+correto cálculo da tensão superficial em um modelo axissimétrico, se faz
+necessária a inclusão da curvatura na direção de rotação do eixo de
+simetria $r$, ou seja, a curvatura referente à direção de $\theta$:
 
 \begin{equation}
 	\kappa = \kappa_{2D} + \frac{sen(\phi)}{r}
 \label{eq:curvAxi}
-\end{equation}
+\end{equation}\vspace{0.5cm}
 
-\noident onde $r$ é a distância do elemento infinitesimal do campo ao
+\noindent onde $r$ é a distância do elemento infinitesimal do campo ao
 eixo de simetria $z$ através da reta paralela ao vetor normal da
 interface entre os dois fluidos.
 
+\subsubsection{Modelo de estruturas de não-equilíbrio em sistemas
+químicos}
+
+Modelo de estruturas de não-equilíbrio refere-se a instabilidades
+hidrodinâmicas de interfaces de separação de fluidos em meios porosos.
+Estas instabilidades estão fortemente ligadas a variações de viscosidade e
+densidade em camadas distintas de uma fase líquida contendo
+concentrações de soluto que afetam diretamente as propriedades do
+líquido. Este fenômeno ocorre em uma grande variedade de aplicações
+industriais, inclundo técnicas de sequestro de $CO_2$, hidrologia,
+filtragem, cromatografia de líquidos e tantas outras. 
+
+No modelo proposto, considera-se o problema de geração de estruturas
+através de escoamento caracterizado por empuxo, gerado em
+meios porosos devido à dissolução de uma camada de líquido inicialmente
+posicionada sobre outra camada de líquido de densidade menor.
+Matematicamente, este modelo é governado pela lei de Darcy e a
+aproximação de Boussinesq para devida consideração dos efeitos de empuxo
+provocados pela diferença de densidade. As equações que descrevem a
+dinâmica e evolução do escoamento são apresentadas em uma formulação
+corrente-vorticidade com acoplamento da equação de concentração:
+
+\begin{equation}
+	\nabla^2 \psi = -\omega_z
+\label{eq:chem1}
+\end{equation}
+
+\begin{equation}
+	\omega_z = R \frac{\partial c}{\partial x}
+\label{eq:chem2}
+\end{equation}
+
+\begin{equation}
+	\frac{D c}{D t} = D \nabla^2 c
+\label{eq:chem3}
+\end{equation}\vspace{0.5cm}
+
+\noindent onde $\psi$ representa a função corrente, $\omega_z$ a função
+vorticidade, $c$ a concentração da solução, $R$ um parâmetro do
+problema, $D$ o coeficiente de difusão de massa e $t$ representa o
+tempo.
+
 \subsection{Método de Elementos Finitos}
+
 Nos anos 50, o método de elementos finitos teve grande utilização na
 mecânica de sólidos.  Apenas a partir da década de 70, após a
 consolidação do método de Galerkin para equações de difusão,
@@ -462,10 +524,10 @@ força de tensão superficial considerando o seguinte esquema:
 	= 
 	\frac{1}{We} \mathbf{\Sigma} \mathbf{G} H_{\lambda}
 	\label{eq:surfDiscrete}
-\end{equation}
+\end{equation}\vspace{0.5cm}
 
 Na equação acima, $\mathbf{\Sigma}$ representa uma matriz diagonal com
-elementos $\sigma \kappa_1, \sigma \kappa_2, \sigma \kappa_3,\cdots,
+elementos $\sigma \kappa_1, \sigma \kappa_2, \sigma \kappa_3,$ $\cdots,
 \sigma \kappa_{NV}$, onde $NV$ é o número total de nós da malha
 relativos ao campo de pressão. A matriz $\mathbf{G}$ representa a forma
 discreta do operador gradiente $\nabla$ e $H_{\lambda}$ é o função
@@ -635,16 +697,30 @@ realizadas no âmbito do presente projeto CAPES.
  \end{figure}
 
 \section{Produção Científica}
+
 Abaixo estão listados os artigos publicados em canais de comunicação
 internacional em que o pesquisador bolsista teve participação direta.
 
 \begin{itemize}
 	\item Finite Element Simulation of Fingering in Convective Dissolution in
+		  Porous Media Rachel M. Lucena, Norberto Mangiavacchi, José
+		  Pontes, Anne De Wit, Gustavo Anjos, JCIS,
+		  doi:10.6062/jcis.2015.06.01.0091 -- 2015, \textbf{aceito para
+		  publicação}.
+	\item Comparative CFD Simulations of Gas Transport in Slug Flow from
+		  Periodic Arrays with Single or Multiple Bubbles G. P.
+		  Oliveira, N. Mangiavacchi, G. Anjos, J. Pontes, J. R. Thome,
+		  JCIS, doi: 10.6062/jcis.2014.05.02.0086 -- 2015,
+		  \textbf{aceito para publicação}.
+	\item ALE-FEM for two-phase flows with heat and mass transfer in
+	      microchannels, G.R. Anjos, N. Mangiavacchi, J. Pontes, J.R. Thome,
+		  interPACK -- 2015
+	\item Finite Element Simulation of Fingering in Convective Dissolution in
 	      Porous Media Rachel M. Lucena, Norberto Mangiavacchi, José Pontes,
 	      Anne De Wit, Gustavo Anjos, CCIS -- 2014
 	\item Comparative CFD Simulations of Gas Transport in Slug Flow from
 		  Periodic Arrays with Single or Multiple Bubbles G. P.
-		  Oliveira, N. Mangiavacchi, G. Anjosa, J. Pontes, J. R. Thome,
+		  Oliveira, N. Mangiavacchi, G. Anjos, J. Pontes, J. R. Thome,
 		  CCIS -- 2014.
 	\item Topological Remeshing and Locally Supported Smoothing for
 	      Bubble Coalescence in Two-Phase Flows
@@ -654,10 +730,12 @@ internacional em que o pesquisador bolsista teve participação direta.
 	      Periodically Staggered Arrays
 		  Gustavo Charles P. de Oliveira, Gustavo R. Anjos, José Pontes,
 		  Norberto Mangiavacchi, CONEM -- 2014
+	\item 3D Moving Mesh Finite Element Method for Two-Phase Flows, G.R
+	      Anjos, N. Borhani, N.  Mangiavacchi, J.R. Thome,  Journal of
+		  Computational Physics, doi:10.1016/j.jcp.2014.03.067 -- 2014
 	\item Numerical Simulation of a Periodic Array of bubbles in a
-	      channel
-	      N. Mangiavacchi, G.C.P. Oliveira, G. Anjos and J. R. Thome,
-		  PAMAC -- 2013
+		  channel N. Mangiavacchi, G.C.P. Oliveira, G. Anjos and J. R.
+		  Thome, PAMAC -- 2013
 	\item A Survey of Results Concerning Steady Solutions and the
 	      Stability of a Class of Rotating Flows
 		  José Pontes, Norberto Mangiavacchi, Gustavo Rabello dos Anjos,
@@ -666,18 +744,19 @@ internacional em que o pesquisador bolsista teve participação direta.
 \end{itemize}
 
 \section{Plano de Trabalho}
-O plano de trabalho proposto para o primeiro período de 4 bimestres de
-projeto pode ser encontrado na Fig.(\ref{fig:plano}, juntamente com a
-etapa final do projeto. Nota-se que o plano de trabalho foi reduzido em
-2 bimestres, pois o pesquisador bolsista foi aprovado no concurso
-público para professor adjunto do Departamento de Engenharia Mecânica da
-Universidade do Rio de Janeiro, tomando posse no dia 14 de julho de
-2014. Em decorrência deste fato, o projeto teve seu prazo reduzido para
-final de julho de 2015, totalizando 10 bimestres. 
+
+O plano de trabalho proposto para o período total de 19 meses (10
+bimestres) de projeto pode ser encontrado na Fig.(\ref{fig:plano}) ,
+juntamente com a etapa final do projeto. Nota-se o pesquisador bolsista
+foi aprovado no concurso público para professor adjunto do Departamento
+de Engenharia Mecânica da Universidade do Rio de Janeiro, tomando posse
+no dia 14 de julho de 2014. Em decorrência deste fato, o projeto teve
+seu prazo reduzido para final de julho de 2015, totalizando 19 meses (10
+bimestres). 
 
  \begin{figure}[ht!]
  	\begin{center}
- 		\includegraphics[angle=0, scale=0.5]{figs/plano.png}
+ 		\includegraphics[angle=0, scale=0.75]{figs/plano.png}
  	\end{center}
  	\caption{Plano de trabalho proposto para o período inicial de
 	execução do projeto Bolsa de Atração de Jovens Talentos - CAPES.}
@@ -692,13 +771,17 @@ novas funcionalidades foram incorporadas ao já existente código. É
 importante notar que o pesquisador bolsista desenvolveu, além de seu
 plano de trabalho inicial, um simulador de escoamentos bidimensional em
 linguagem de script PYTHON para uso acadêmico, que servirá de apoio nas
-aulas ministradas por ele em cursos de graduação e pós-graduação. Alguns
-testes e validações foram realizados com sucesso e os resultados podem
-ser encontrados na seção de Resultados Obtidos, bem como algumas
-simulações pertinentes ao projeto. O pesquisador bolsista participou
-ativamente das publicações relacionadas na seção Produção Científica
-usando as funcionalidades incorporadas ao simulador através deste
-projeto.
+aulas ministradas por ele em cursos de graduação e pós-graduação.
+Diversos testes e validações foram realizados com sucesso e os
+resultados podem ser encontrados na seção de Resultados Obtidos, bem
+como algumas simulações pertinentes ao projeto. O pesquisador bolsista
+participou ativamente das publicações relacionadas na seção Produção
+Científica usando as funcionalidades incorporadas ao simulador através
+deste projeto. Os artigos científicos foram publicados em canais de
+comunicação internacional de excelência na área de conhecimento CAPES -
+Engenharia 3, durante a duração do projeto. Finalmente, a prestação de
+contas e a entrega do relatório final foram devidamente alocadas no
+final do período proposto deste projeto.  
 
 \section{Referências Bibliográficas}
 \bibliographystyle{plain}

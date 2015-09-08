@@ -1,6 +1,7 @@
 .DS*
 references
 *swp
+*.idx
 *.aux
 *.bbl
 *.blg

@@ -10,6 +10,7 @@ all: $(PDFFILE)
 $(PDFFILE): main.tex
 	pdflatex $(@:%.dvi=%.tex)
 	bibtex $(@:%.dvi=%)
+	#makeindex main.nlo -s nomencl.ist -o main.nls
 	pdflatex $(@:%.dvi=%.tex)
 	pdflatex $(@:%.dvi=%.tex)
 
