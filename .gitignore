@@ -4,6 +4,7 @@ references
 *.idx
 *.aux
 *.bbl
+*.toc
 *.blg
 *.log
 *.spl
