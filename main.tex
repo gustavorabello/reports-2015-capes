@@ -617,7 +617,7 @@ tal, subdividiremos as seções pela temática da metodologia, a saber:
 Nesta seção buscamos apresentar algumas validações e resultados obtidos
 com o desenvolvimento do código de elementos finitos tridimensionais
 para simulação de escoamentos multifásicos. As
-figs.~(\ref{fig:pressure3d}, \ref{fig:oscillating} e \ref{fig:sessile})
+Figs.~(\ref{fig:pressure3d}, \ref{fig:oscillating} e \ref{fig:sessile})
 representam validações através de comparação com resultados analíticos.
 A Fig.~(\ref{fig:sucrose}) é resultado de simulação de bolha de ar
 imersa em uma solução de sacarose confinada em um canal vertical, movida
@@ -628,8 +628,41 @@ Fig.~(\ref{fig:sin}), mostra-se uma simulação numérica de escoamento
 multifásico de uma bolha de ar imersa em uma solução de glicerol em um
 canal com formato senoidal. Nele é possível notal que a bolha é
 comprimida e alongada devido a passagem em partes mais estreitas do
-canal seguida de passagens com expansão. Futuras investigações serão
-realizadas no âmbito do presente projeto CAPES.
+canal seguida de passagens com expansão. Neste projeto também foram
+realizadas simulações utilizando o recém desenvolvido simulador
+com modelo axissimétrico para cálculos de bolhas em ascensão e bolhas em
+microcanais. Para o problema de estruturas de
+não-equilíbrio em sistemas químicos, biológico e ambientais, foram
+realizados diversos testes, onde os dois mais importantes estão
+ilustrados nas próximas seções, no qual perfis de concentração médios
+para diversos passos de tempo são ilustrado e comparados a soluções
+analíticas. 
+
+\subsubsection{Gota estáticas}
+
+Neste teste buscamos analisar o acoplamento entre pressão e tensão
+superficial e a consequente geração de escoamentos espúrios devido à
+discretização numérica da equação de conservação. Nele, inicializamos
+uma gota esférica e imersa em outro fluido na ausência de qualquer força
+externa e campo de velocidade. Matematicamente a equação de quantidade
+de movimento Eq.~(\ref{eq:NS3a}) se reduz a:
+
+\begin{equation}
+	\nabla p = \fvet
+\end{equation}
+
+Esta equação mostra que a força de tensão superficial está em equilíbrio
+com o gradiente de pressões. Entretanto, devido à discretização
+numérica, correntes espúrias de velocidade podem aparecer como resultado
+devido às várias aproximações realizadas no decorrer do código numérico.
+Tal efeito não é desejável e objetiva-se minimizá-lo, de tal forma que
+os erros provenientes à discretização dos termos não afete o resultado
+em uma simulação mais rigorosa. 
+
+Na Fig.~(\ref{fig:pressure3d}) o teste de gota estática é realizado com
+sucesso, mostrando que a pressão é exercida na bolha é proporcional
+à tensão superficial de uma gota com raio $R=0.5$ e $Eo=0.2$, resultando
+em uma diferença de pressão $\Delta P = 20$.
 
  \begin{figure}[h]
  	\begin{center}
@@ -640,6 +673,56 @@ realizadas no âmbito do presente projeto CAPES.
 	separa os fluidos.}
  	\label{fig:pressure3d} 
  \end{figure}
+
+\subsubsection{Gota oscilante}
+
+A evolução de uma gota inicialmente perturbada diametralmente é
+apresentada neste caso teste. Este, é parte de um conjunto de testes
+essenciais para validação de problemas envolvendo dinâmica de
+escoamentos com presença de tensão superficial. A simulação consiste em
+inicializar uma gota elipsoidal e simétrica axialmente na ausência de
+campos gravitacionais. Assumindo que os efeitos de viscosidade são
+mínimos, espera-se que a gota perturbada oscile diametralmente devido à
+variação de pressão e tensão superficial. Esta oscilação é caracterizada
+por uma frequência analítica, descrita por:
+
+\begin{equation}
+	w^2 = \frac{24\sigma}{(3\rho_{in}+2\rho_{out})R^3 }
+\label{eq:frequency}
+\end{equation}
+
+\noindent e um decaimento de amplitude dado por:
+
+\begin{equation}
+	a(t) = a_0 e^{-t/\tau}
+\label{eq:amplitude}
+\end{equation}
+
+\noindent onde $\rho_{in}$ representa a densidade da gota, $\rho_{out}$
+representa a densidade do fliudo externo à gota e $R$ é o raio da gota
+não perturbado. Na equação de amplitude, $a_0$ é o valor inicial da
+amplitude da gota que deve ser pequeno o bastante para evitar o
+crescimento de modos não-lineares. O tempo é dado por $t$ e $\tau=R/5\nu$
+onde $R$ é o raio da gota não perturbado e $\nu$ é a viscosidade
+cinemática. Para esta simulação, $a_0$ foi ajustado para o valor de
+$0.1R$, garantindo a linearização do processo de perturbação. 
+
+A Fig.~(\label{fig:oscillating}) mostra a solução numérica para a
+posição axial da interface para dois diferentes refinamentos de malha,
+chamados de "coarse" (grosseiro) e "refined" (refinado). A comparação é
+então feita através da curva analítica para posição de um ponto na
+interface dado por:
+
+\begin{equation}
+	y(t) = y_0 + a_0 e^{-t/\tau} cos(wt).
+\label{eq:oscillating}
+\end{equation}
+
+\noindent onde $y_0$ corresponde a posição inicial da interface
+perturbada, $t$ representa o tempo e $w$ a frequência de oscilação. A
+amplitude inicial é ajustada por $a_0$. Como esperado, a curva para a
+malha refinada apresenta melhor concordância com a curva analítica dada
+pela Eq.~(\ref{eq:oscillating}).
 
  \begin{figure}[h!]
  	\begin{center}
@@ -655,6 +738,39 @@ realizadas no âmbito do presente projeto CAPES.
  	\label{fig:oscillating} 
  \end{figure}
 
+\subsubsection{Gota apoiada}
+
+Neste teste foi validada a implementação do termo de tensão superficial
+$\fvet$ e seu acoplamento com o termo de pressão e gravidade. Uma gota
+esférica de raio $R=0.5$ é inicialmente colocada próxima a uma
+superfície rígida. Devido à diferença de densidades, a gota se movimenta
+verticalmente para baixo até tocar na parede. Neste teste, estamos
+interessados em comparar a forma da gota instantes antes da mesma tocar
+a superfície rígida. Esta forma pode ser comparada através da
+clássica solução de Young-Laplace para gotas que se escreve como se
+segue:
+
+\begin{equation}
+	\big( \frac{1}{R_1}+\frac{1}{R_2} \big)\frac{1}{Eo}
+	=
+	\Delta p_g
+	=
+	\Delta \rho g (z-z_0)
+	\label{eq:young-laplace}
+\end{equation}
+
+\noindent onde $R_1$ e $R_2$ são os dois principais raios com simetria
+axial da bolha, $\sigma$ representa o coeficiente de tensão superficial,
+e$\Delta p_g$ a diferença de pressão hidro-estática através da
+interface, onde $\Delta \rho = \rho_{in}-\rho_{out}$. 
+
+A forma da bolha antes de tocar na superfície rígida é comparada com sua
+solução analítica dada pela Eq.~(\ref{eq:young-laplace}) e mostrada na 
+Fig.~(\ref{fig:sessileShape}). O resultado reflete a precisão da
+discretização da equação de governo para o trabalho proposto por este
+projeto, bem como o correto balanço de gravidade, pressão e força de
+tensão superficial.
+
  \begin{figure}[h!]
  	\begin{center}
  		\includegraphics[angle=0, scale=0.5]{figs/sessileShape.pdf}
@@ -667,6 +783,31 @@ realizadas no âmbito do presente projeto CAPES.
  	\label{fig:sessile} 
  \end{figure}
 
+\subsubsection{Ascensão de bolhas confinadas em canais de dimensão
+macroscópica e microscópica}
+
+A simulação de escoamentos de bolhas com diâmetro maior que o diâmetro
+do canal é um desafio na área de escoamentos multifásicos devido ao seu
+grau de dificuldade associado à presença de um filme líquido que separa
+bolha e a superfície da parede do canal. Nesta configuração, os efeitos
+de pressão e tensão superficial são de extrema importância pois estão
+acoplados fortemente e interagem para mudar o campo do velocidades do
+escoamento. Além do mais efeitos gravitacionais devem ser considerados
+para canais com dimensão da ordem de $10^{-3}$.
+
+A Fig.~(\ref{fig:sucrose}) mostra a progressão temporal de uma bolha do
+tipo "Taylor" imersa em uma solução de sacarose. A bolha é iniciada com
+o formato apresentado na Fig.~(\ref{fig:sucrose}a) e sua evolução pode
+ser acompanhada nas imagens seguintes. Na evolução transiente, a
+velocidade da bolha alcança sua máxima velocidade no $t \approx 1$ e sua
+velocidade terminal no tempo $t \approx 3.7$, mantendo esta velocidade
+durante o restante da simulação. É mostrado que a parte inferior da
+bolha oscila durante o estado transiente e converge para a posição final
+no tempo $t \approx 7.4$. A Fig.~(\ref{fig:sucroseVel} apresenta a
+solução transiente da velocidade do centroide da bolha. Foi observado
+uma extrapolação do valor da velocidade entre $t=0$ e $t=1.1$, devido à
+deformação inicial da parte inferior da bolha e, consequentemente, a
+aceleração de seu centro de massa.
 
  \begin{figure}[h!]
  	\begin{center}
@@ -704,6 +845,23 @@ realizadas no âmbito do presente projeto CAPES.
    \label{fig:sucroseVel}
  \end{figure}
 
+\subsubsection{Escoamento de bolhas em microcanais ondulados}
+
+Nesta seção apresentamos resultados de escoamentos de bolhas em
+microcanais ondulados que apresentam variação de diâmetro ao longo de
+seu comprimento.  A Fig.~(\ref{fig:sin}) representa a evolução da forma
+de uma bolha do tipo Taylor em função do tempo para uma bolha de ar
+imersa em uma solução de glicerol em um microcanal ondulado pertinente
+ao processo de de produção, estocagem, transporte e consumo de metano da
+decomposição de biomassa em reservatórios de hidrelétricas. A forma do
+canal é definida por uma função senoidal e a malha numérica utilizada
+nesta simulação pode ser observada. Nota-se que a dinâmica do escoamento
+faz com que a bolha se deforme quando o diâmetro da tubulação é reduzido
+ou aumentado, gerando um efeito de oscilação em sua forma. Para casos
+onde a velocidade de escoamento da bolha é elevada, nota-se até mesmo a
+ruptura da interface devido à grande oscilação gerada pela redução
+seguida de expansão do diâmetro do canal.
+
  \begin{figure}[h]
  	\begin{center}
  		\subfloat[$t=0.00$]
@@ -735,6 +893,10 @@ realizadas no âmbito do presente projeto CAPES.
 
 \subsection{Modelo Axissimétrico}
 
+Uma comparação com modelos tridimensionais e resultados experimentais é
+realizada nesta seção para o simulador numérico de modelo com simetria
+axial. 
+
  \begin{figure}[h]
  	\begin{center}
  		\subfloat[$t=0.0$]
@@ -755,7 +917,10 @@ realizadas no âmbito do presente projeto CAPES.
  		\subfloat[$t=3.21$]
 			{\includegraphics[angle=90,scale=0.25]{figs/rising-05.png}}
  	\end{center}
-	\caption{Evolução.} 
+	\caption{Evolução de bolha de ar axissimétrica em ascensão em uma
+	solução de água com açúcar e viscosidade dinâmica $\mu=2.73$. (a)
+	Bolha inicialmente esférica. (b)-(d) Evolução da forma da bolha e
+	(e)-(f) bolha em estado final de forma.} 
 	\label{fig:micro1} 
  \end{figure}
 
@@ -767,7 +932,9 @@ realizadas no âmbito do presente projeto CAPES.
  		\subfloat[]
 			{\includegraphics[angle=90,scale=0.25]{figs/rising-07.png}}
  	\end{center}
-	\caption{Comparação em $t=3.85$.} 
+	\caption{Visualização da evolução de bolha de ar axissimétrica para
+	o tempo $t=3.85$ (a) campo de pressão e (b) malha bidimensional de
+	elementos triangulares e campo de velocidade vertical.} 
 	\label{fig:micro2} 
  \end{figure}
 
@@ -791,7 +958,11 @@ realizadas no âmbito do presente projeto CAPES.
  		\subfloat[$t=3.46$]
 			{\includegraphics[angle=0,scale=0.2]{figs/taylor-05.png}}
  	\end{center}
-	\caption{Evolução.} 
+	\caption{Evolução de bolha do tipo Taylor em microcanais
+	axissimétricos com forma contínua. (a) Bolha em forma inicial
+	confinada. (b)-(d) Evolução da forma da bolha e (e)-(f) bolha em
+	estado final de forma após regime transiente.} 
+
 	\label{fig:micro1} 
  \end{figure}
 
@@ -803,7 +974,9 @@ realizadas no âmbito do presente projeto CAPES.
  		\subfloat[]
 			{\includegraphics[angle=0,scale=0.205]{figs/taylor-07.png}}
  	\end{center}
-	\caption{Comparação em $t=4.14$.} 
+	\caption{Visualização da evolução de bolha de ar axissimétrica para
+	o tempo $t=4.14$ (a) campo de pressão e (b) malha bidimensional de
+	elementos triangulares e campo de velocidade horizontal.} 
 	\label{fig:micro2} 
  \end{figure}
 
@@ -925,25 +1098,58 @@ bimestres).
  	\label{fig:plano} 
  \end{figure}
 
+
+\section{Conclusão}
+
 A pesquisa bibliográfica foi realizada com sucesso, onde o bolsista
 identificou os pontos mais importantes da modelagem matemática e
 implementação numérica para realização de sua pesquisa. A partir do 2o.
 bimestre foi iniciado o desenvolvimento do simulador numérico, onde
-novas funcionalidades foram incorporadas ao já existente código. É
-importante notar que o pesquisador bolsista desenvolveu, além de seu
+novas funcionalidades foram incorporadas ao já existente código. Dentre
+estes, as seguintes etapas foram realizadas com sucesso:
+
+\begin{itemize}
+	\item testes de escoamentos multifásicos com ondas capilares em
+	      bolhas;
+	\item estudo e desenvolvimento de modelo em três dimensões e axisimétrico
+	      para escoamentos multifásicos;
+	\item realização de experimentos computacionais de
+		  decomposição de biomassa e produção de gases com sedimentação
+		  de material orgânico; de medição da sedimentação/ressuspensão
+		  e consumo de produtos;
+	\item validação dos modelos desenvolvidos para sistemas existentes com
+	      utilização de tecnologia de última geração;
+	\item estudo e desenvolvimento de modelos tridimensionais e axisimétricos
+		  para simulação numérica de estrutura de não-equilíbrio em
+		  sistemas químicos, biológico e ambientais;
+\end{itemize}
+
+Foi incorporada ao simulador numérico como módulo computacional a
+paralelização da solução do sistema linear para cálculo intensivo em
+\textit{clusters}, através do desenvolvimento de novos
+precondicionadores para a aceleração dos métodos iterativos implantados
+e métodos mais eficientes de cálculo de tensão superficial. 
+
+É importante notar que o pesquisador bolsista desenvolveu, além de seu
 plano de trabalho inicial, um simulador de escoamentos bidimensional em
-linguagem de \textit{script} PYTHON para uso acadêmico, que servirá de apoio nas
-aulas ministradas por ele em cursos de graduação e pós-graduação.
+linguagem de \textit{script} PYTHON para uso acadêmico, que servirá de
+apoio nas aulas ministradas por ele em cursos de graduação e
+pós-graduação.
+
 Diversos testes e validações foram realizados com sucesso e os
 resultados podem ser encontrados na seção de Resultados Obtidos, bem
 como algumas simulações pertinentes ao projeto. O pesquisador bolsista
 participou ativamente das publicações relacionadas na seção Produção
 Científica usando as funcionalidades incorporadas ao simulador através
-deste projeto. Os artigos científicos foram publicados em canais de
+deste projeto. 
+
+Os artigos científicos foram publicados em canais de
 comunicação internacional de excelência na área de conhecimento CAPES -
 Engenharia 3, durante a duração do projeto. Finalmente, a prestação de
 contas e a entrega do relatório final foram devidamente alocadas no
 final do período proposto deste projeto.  
+	
+\end{itemize}
 
 \section{Referências Bibliográficas}
 \bibliographystyle{plain}
