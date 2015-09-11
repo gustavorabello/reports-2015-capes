@@ -167,6 +167,7 @@ Superficial e Solução do Sistema Linear.
 \subsection{Equações de Governo}
 
 \subsubsection{Modelo em três dimensões}
+\label{sec:3-dimension}
 
 O princípio de conservação de massa estabelece que, dado um fluido
 qualquer com massa específica $\rho$ que escoa através de um volume de
@@ -279,6 +280,7 @@ separa os fluidos e $\delta$ representa uma função de identificação da
 posição da interface.
 
 \subsubsection{Modelo axissimétrico}
+\label{sec:axi}
 
 Para o caso de um modelo bidimensional axissimétrico, faz-se a hipótese
 de que o escoamento é simétrico em torno do eixo longitudinal $z$ em um
@@ -369,6 +371,7 @@ representado pela Fig~(\ref{fig:axisymmetric})
 
 \subsubsection{Modelo de estruturas de não-equilíbrio em sistemas
 químicos}
+\label{sec:chem}
 
 Modelo de estruturas de não-equilíbrio refere-se a instabilidades
 hidrodinâmicas de interfaces de separação de fluidos em meios porosos.
@@ -452,7 +455,7 @@ malha tridimensional é fixa no espaço. Uma função adicional é necessária
 para comunicação entre as malhas, uma vez que não há nenhuma
 interconectividade implícita. Esta abordagem mantém a interface entre as
 fases com espessura zero, no qual uma representação precisa é obtida.
-Apesar de sua excelente definição geométrica , as propriedades do fluido
+Apesar de sua ótima definição geométrica , as propriedades do fluido
 perto da interface exigem tratamento numérico para evitar instabilidades
 indesejáveis. Como consequência, estas propriedades são suavizados ao
 longo da zona de transição e a espessura nula já não pode ser mais
@@ -617,7 +620,8 @@ tal, subdividiremos as seções pela temática da metodologia, a saber:
 Nesta seção buscamos apresentar algumas validações e resultados obtidos
 com o desenvolvimento do código de elementos finitos tridimensionais
 para simulação de escoamentos multifásicos. As
-Figs.~(\ref{fig:pressure3d}, \ref{fig:oscillating} e \ref{fig:sessile})
+Figs.~(\ref{fig:pressure3d}, \ref{fig:oscillating} e
+\ref{fig:sessileShape})
 representam validações através de comparação com resultados analíticos.
 A Fig.~(\ref{fig:sucrose}) é resultado de simulação de bolha de ar
 imersa em uma solução de sacarose confinada em um canal vertical, movida
@@ -699,7 +703,7 @@ por uma frequência analítica, descrita por:
 \end{equation}
 
 \noindent onde $\rho_{in}$ representa a densidade da gota, $\rho_{out}$
-representa a densidade do fliudo externo à gota e $R$ é o raio da gota
+representa a densidade do fluido externo à gota e $R$ é o raio da gota
 não perturbado. Na equação de amplitude, $a_0$ é o valor inicial da
 amplitude da gota que deve ser pequeno o bastante para evitar o
 crescimento de modos não-lineares. O tempo é dado por $t$ e $\tau=R/5\nu$
@@ -707,7 +711,7 @@ onde $R$ é o raio da gota não perturbado e $\nu$ é a viscosidade
 cinemática. Para esta simulação, $a_0$ foi ajustado para o valor de
 $0.1R$, garantindo a linearização do processo de perturbação. 
 
-A Fig.~(\label{fig:oscillating}) mostra a solução numérica para a
+A Fig.~(\ref{fig:oscillating}) mostra a solução numérica para a
 posição axial da interface para dois diferentes refinamentos de malha,
 chamados de "coarse" (grosseiro) e "refined" (refinado). A comparação é
 então feita através da curva analítica para posição de um ponto na
@@ -780,7 +784,7 @@ tensão superficial.
 	analítica correspondente para uma gota apoiada com simetria axial.
 	A solução analítica é encontrada através da equação de capilaridade
 	de Young-Laplace.}
- 	\label{fig:sessile} 
+ 	\label{fig:sessileShape} 
  \end{figure}
 
 \subsubsection{Ascensão de bolhas confinadas em canais de dimensão
@@ -809,7 +813,7 @@ uma extrapolação do valor da velocidade entre $t=0$ e $t=1.1$, devido à
 deformação inicial da parte inferior da bolha e, consequentemente, a
 aceleração de seu centro de massa.
 
- \begin{figure}[h!]
+ \begin{figure}[!h]
  	\begin{center}
  		\subfloat[$t=0.00$]
 			{\includegraphics[angle=90,scale=0.3]{figs/sucrose-1.pdf}}
@@ -827,7 +831,7 @@ aceleração de seu centro de massa.
 			{\includegraphics[angle=90,scale=0.29]{figs/sucrose-5.pdf}}
  	\end{center}
 	\caption{Evolução da forma da bolha com o tempo para uma bolha de ar
-	imersa em uma solução de sucarose. (a) Forma inicial da bolha para
+	imersa em uma solução de sacarose. (a) Forma inicial da bolha para
 	$t=0$. (b-d) Mudança da forma da bolha para solução transiente no
 	tempo. (e) Forma da bolha final com $t=7.41$.} 
 	\label{fig:sucrose} 
@@ -839,9 +843,9 @@ aceleração de seu centro de massa.
  		\includegraphics[angle=0, scale=0.5]{figs/sucrose.pdf}
  	\end{center}
 	\caption{Elevação de uma bolha de ar do tipo Taylor imersa em uma
-	solução de sucarose. A evolução da velocidade de centro de massa da
+	solução de sacarose. A evolução da velocidade de centro de massa da
 	bolha é comparada com a velocidade terminal da bolha encontrada no
-	mapa de velocidades de \cite{white1962}}.
+	mapa de velocidades de \cite{white1962}.}
    \label{fig:sucroseVel}
  \end{figure}
 
@@ -862,7 +866,7 @@ onde a velocidade de escoamento da bolha é elevada, nota-se até mesmo a
 ruptura da interface devido à grande oscilação gerada pela redução
 seguida de expansão do diâmetro do canal.
 
- \begin{figure}[h]
+ \begin{figure}[!ht]
  	\begin{center}
  		\subfloat[$t=0.00$]
 			{\includegraphics[angle=0,scale=0.305]{figs/sin-0.png}}
@@ -895,93 +899,156 @@ seguida de expansão do diâmetro do canal.
 
 Uma comparação com modelos tridimensionais e resultados experimentais é
 realizada nesta seção para o simulador numérico de modelo com simetria
-axial. 
+axial para escoamentos multifásicos envolvendo a composição binária
+líquido-gás. Note que a simulação axissimétrica é feita utilizando malha
+bidimensional triangular e para sua interpretação física, deve-se
+rotacionar o plano de visualização em $360^\circ$.
 
- \begin{figure}[h]
- 	\begin{center}
- 		\subfloat[$t=0.0$]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-00.png}}
- 		\hspace{0.7cm}
- 		\subfloat[$t=0.69$]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-01.png}}
- 		\hspace{0.7cm}
- 		\subfloat[$t=1.33$]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-02.png}}
- 		\\
- 		\subfloat[$t=1.96$]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-03.png}}
- 		\hspace{0.7cm}
- 		\subfloat[$t=2.59$]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-04.png}}
- 		\hspace{0.7cm}
- 		\subfloat[$t=3.21$]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-05.png}}
- 	\end{center}
-	\caption{Evolução de bolha de ar axissimétrica em ascensão em uma
-	solução de água com açúcar e viscosidade dinâmica $\mu=2.73$. (a)
-	Bolha inicialmente esférica. (b)-(d) Evolução da forma da bolha e
-	(e)-(f) bolha em estado final de forma.} 
-	\label{fig:micro1} 
- \end{figure}
+Na Fig.~(\ref{fig:micro1}), observa-se a evolução de bolha de ar
+axissimétrica em ascensão em uma solução de água com açúcar e
+viscosidade dinâmica $\mu=2.73$. A bolha é inicialmente ajustada como
+esférica (ou um círculo de raio $R=0.5$ em modelo de simetria axial) e,
+em seguida, dada a diferença de densidades entre fluidos, a bolha entra
+em dinâmica de ascensão, mudando sua forma com a evolução temporal, até
+chegar ao estado final de sua forma. Nota-se que a bolha apresenta
+formato tampão elipsoidal com formação e desprendimento de vórtices na
+parte posterior da bolha.
 
- \begin{figure}[h]
- 	\begin{center}
- 		\subfloat[]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-06.png}}
+\begin{figure}[!h]
+	\begin{center}
+		\subfloat[$t=0.0$]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-00.png}}
 		\hspace{0.7cm}
- 		\subfloat[]
-			{\includegraphics[angle=90,scale=0.25]{figs/rising-07.png}}
- 	\end{center}
-	\caption{Visualização da evolução de bolha de ar axissimétrica para
-	o tempo $t=3.85$ (a) campo de pressão e (b) malha bidimensional de
-	elementos triangulares e campo de velocidade vertical.} 
-	\label{fig:micro2} 
- \end{figure}
+		\subfloat[$t=0.69$]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-01.png}}
+		\hspace{0.7cm}
+		\subfloat[$t=1.33$]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-02.png}}
+		\\
+		\subfloat[$t=1.96$]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-03.png}}
+		\hspace{0.7cm}
+		\subfloat[$t=2.59$]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-04.png}}
+		\hspace{0.7cm}
+		\subfloat[$t=3.21$]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-05.png}}
+	\end{center}
+   \caption{Evolução de bolha de ar axissimétrica em ascensão em uma
+   solução de água com açúcar e viscosidade dinâmica $\mu=2.73$. (a)
+   Bolha inicialmente esférica. (b)-(d) Evolução da forma da bolha e
+   (e)-(f) bolha em estado final de forma.} 
+   \label{fig:micro1} 
+\end{figure}
 
- \begin{figure}[h]
- 	\begin{center}
- 		\subfloat[$t=0.0$]
-			{\includegraphics[angle=0,scale=0.2]{figs/taylor-00.png}}
- 		\hspace{0.7cm}
- 		\subfloat[$t=0.65$]
-			{\includegraphics[angle=0,scale=0.2]{figs/taylor-01.png}}
- 		\\
- 		\subfloat[$t=1.33$]
-			{\includegraphics[angle=0,scale=0.2]{figs/taylor-02.png}}
- 		\hspace{0.7cm}
- 		\subfloat[$t=2.05$]
-			{\includegraphics[angle=0,scale=0.2]{figs/taylor-03.png}}
- 		\\
- 		\subfloat[$t=2.76$]
-			{\includegraphics[angle=0,scale=0.2]{figs/taylor-04.png}}
- 		\hspace{0.7cm}
- 		\subfloat[$t=3.46$]
-			{\includegraphics[angle=0,scale=0.2]{figs/taylor-05.png}}
- 	\end{center}
-	\caption{Evolução de bolha do tipo Taylor em microcanais
-	axissimétricos com forma contínua. (a) Bolha em forma inicial
-	confinada. (b)-(d) Evolução da forma da bolha e (e)-(f) bolha em
-	estado final de forma após regime transiente.} 
+Uma visualização de campos e malha computacional utilizada nas
+simulações é apresentada na Fig.~(\ref{fig:micro2}). A função de
+\emph{heaviside} representa um campo de identificação de fases (líquida
+e gasosa) e triângulos são utilizados para construção da malha utilizada
+nas simulações numéricas. Nota-se que a malha mantem ótima razão de
+aspecto, preservando a qualidade do elemento finito e, consequentemente,
+diminuindo o erro de discretização numérica.
 
-	\label{fig:micro1} 
- \end{figure}
+\begin{figure}[!h]
+	\begin{center}
+		\subfloat[]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-06.png}}
+   	\hspace{0.7cm}
+		\subfloat[]
+   		{\includegraphics[angle=90,scale=0.25]{figs/rising-07.png}}
+	\end{center}
+   \caption{Visualização da evolução de bolha de ar axissimétrica para
+   o tempo $t=3.85$ (a) campo de identificação de fases (b) malha
+   bidimensional de elementos triangulares e campo de velocidade
+   vertical.} 
+   \label{fig:micro2} 
+\end{figure}
 
- \begin{figure}[h]
- 	\begin{center}
- 		\subfloat[]
-			{\includegraphics[angle=0,scale=0.2]{figs/taylor-06.png}}
- 		\hspace{0.7cm}
- 		\subfloat[]
-			{\includegraphics[angle=0,scale=0.205]{figs/taylor-07.png}}
- 	\end{center}
-	\caption{Visualização da evolução de bolha de ar axissimétrica para
-	o tempo $t=4.14$ (a) campo de pressão e (b) malha bidimensional de
-	elementos triangulares e campo de velocidade horizontal.} 
-	\label{fig:micro2} 
- \end{figure}
+Simulação numérica axissimétrica de escoamentos em microcanais com
+bolhas confinadas e sua respectiva evolução temporal e espacial é
+apresentado na Fig.~(\ref{fig:taylor1}). A bolha de gás (em cor
+vermelha) é inicialmente disposta no centro do tubo com diâmetro $D=2R$,
+sendo $R$ o raio adimensional da bolha. Por sua vez, a bolha tem
+comprimento de $2.5R$, configurando assim um escoamento de bolha tipo
+Taylor horizontal. No tempo $t=0.65$ o filme que separa a interface da
+bolha (verde) da parede do tupo diminui devido à proporção entre
+densidades e viscosidades dos fluidos. Em $t=1.33$ nota-se que o filme
+líquido diminuir ainda mais na parte da esquerda do bolha, que configura
+o término da bolha, uma vez que a mesma viaja para a direita. No tempo
+$t=3.46$ a bolha encontra sua forma final permanente, mantendo-se nesta
+forma até o final da simulação para $t>3.46$.
+
+\begin{figure}[!h]
+	\begin{center}
+		\subfloat[$t=0.0$]
+   		{\includegraphics[angle=0,scale=0.2]{figs/taylor-00.png}}
+		\hspace{0.7cm}
+		\subfloat[$t=0.65$]
+   		{\includegraphics[angle=0,scale=0.2]{figs/taylor-01.png}}
+		\\
+		\subfloat[$t=1.33$]
+   		{\includegraphics[angle=0,scale=0.2]{figs/taylor-02.png}}
+		\hspace{0.7cm}
+		\subfloat[$t=2.05$]
+   		{\includegraphics[angle=0,scale=0.2]{figs/taylor-03.png}}
+		\\
+		\subfloat[$t=2.76$]
+   		{\includegraphics[angle=0,scale=0.2]{figs/taylor-04.png}}
+		\hspace{0.7cm}
+		\subfloat[$t=3.46$]
+   		{\includegraphics[angle=0,scale=0.2]{figs/taylor-05.png}}
+	\end{center}
+   \caption{Evolução de bolha do tipo Taylor em microcanais
+   axissimétricos com forma contínua. (a) Bolha em forma inicial
+   confinada. (b)-(d) Evolução da forma da bolha e (e)-(f) bolha em
+   estado final de forma após regime transiente.} 
+   \label{fig:taylor1} 
+\end{figure}
+
+Na Fig.~(\ref{fig:taylor2}) é apresentada uma visualização para tempo
+$t=3.46$ do campo de identificação de fases e da malha bidimensional de
+elementos triangulares. Nota-se nesta simulação que a malha mantem
+ótima razão de aspecto, preservando a qualidade do elemento finito
+e, consequentemente, diminuindo o erro de discretização numérica.
+
+\begin{figure}[!h]
+	\begin{center}
+		\subfloat[]
+   		{\includegraphics[angle=0,scale=0.2]{figs/taylor-06.png}}
+		\hspace{0.7cm}
+		\subfloat[]
+   		{\includegraphics[angle=0,scale=0.205]{figs/taylor-07.png}}
+	\end{center}
+   \caption{Visualização da evolução de bolha de ar axissimétrica para
+   o tempo $t=4.14$ (a) campo de identificação de fases (b) malha
+   bidimensional de elementos triangulares e campo de velocidade
+   horizontal.} 
+   \label{fig:taylor2} 
+\end{figure}
 
 
 \subsection{Modelo de estruturas de não-equilíbrio em sistemas químicos}
+
+Nesta seção de resultados deseja-se mostrar o desenvolvimento do campo
+hidrodinâmico acoplado ao perfil de concentrações devido ao movimento de
+fluidos em meios porosos. As instabilidade formadas são fortemente
+associadas a mudanças de viscosidade e densidade entre diferentes
+camadas de um fluido contendo soluto de concentração invariável. Tal
+fenômeno ocorrem em grande variedade de aplicações biológicas, químicas
+e ambientais, incluindo técnicas de sequestro de $\mathbf{CO_2}$,
+hidrologia e aplicações médicas. 
+
+O modelo de estruturas de não-equilíbrio descrito na
+Sec.~(\ref{sec:chem}) é testado para diversos perfis de concentração $c$
+médios em diversos passos de tempo. A Fig.~(\ref{fig:chem1}) mostra a
+evolução dos perfis de concentração calculados pela Lei de Darcy e
+aproximação Boussinesq e comparados com sua solução analítica. Na
+Fig.~(\ref{fig:chem1}b) a amplitude de diferentes modos de perturbação
+de concentração $c$ e da corrente $\psi$ são identificados e
+apresentados. No tempo $t=4000$ pode-se observar uma distorção devido ao
+aumento da perturbação. No tempo $t=5000$ (ver Fig.~(\ref{fig:chem1}d))
+observa-se um perfil de concentração ondulado, com pouca variação de
+amplitude na difusão do campo a partir da interface linear. 
 
  \begin{figure}[h!]
  	\begin{center}
@@ -999,7 +1066,7 @@ axial.
 	\label{fig:chem1} 
  \end{figure}
 
- \begin{figure}[h]
+ \begin{figure}[ht!]
  	\begin{center}
  		\subfloat[Modo $n=3$, $t=0$]
 			{\includegraphics[angle=0,scale=3.0]{figs/chem1.png}}
@@ -1013,9 +1080,22 @@ axial.
  		\subfloat[$t=5000$]
 			{\includegraphics[angle=0,scale=3.0]{figs/chem4.png}}
  	\end{center}
-	\caption{Evolução.} 
+	\caption{(a) Visualização da função corrente $\psi$ para a simulação
+	numérica proposta para este projeto. (b)-(d) Evolução temporal e
+	espacial do perfil de concentração para o modo $n=3$ em diversos
+	tempos de simulação.} 
 	\label{fig:chem2} 
  \end{figure}
+
+Na Fig.~(\ref{fig:chem3}), uma comparação de perfis de concentração para
+interface plana e interface curva é feita. É possível notar que a
+deformação da interface através de uma perturbação senoidal (ondulada)
+(ver Fig.~(\ref{fig:chem3}b) provoca intensa instabilidade no campo de
+concentração, com padrão de perfil de concentração diferente se
+comparado ao modelo de interface linear. Os resultados aqui apresentados
+para o modelo de estruturas de não-equilíbrio em sistemas químicos
+apresenta concordância com experimentos realizados por grupo de pesquisa
+parceiros deste projeto de pesquisa.
 
  \begin{figure}[h]
  	\begin{center}
@@ -1030,6 +1110,8 @@ axial.
 	intensa instabilidade no campo de concentração.} 
 	\label{fig:chem3} 
  \end{figure}
+
+\clearpage
 
 \section{Produção Científica}
 
@@ -1089,7 +1171,7 @@ no dia 14 de julho de 2014. Em decorrência deste fato, o projeto teve
 seu prazo reduzido para final de julho de 2015, totalizando 19 meses (10
 bimestres). 
 
- \begin{figure}[ht!]
+ \begin{figure}[hb!]
  	\begin{center}
  		\includegraphics[angle=0, scale=0.75]{figs/plano.png}
  	\end{center}
@@ -1111,7 +1193,7 @@ estes, as seguintes etapas foram realizadas com sucesso:
 \begin{itemize}
 	\item testes de escoamentos multifásicos com ondas capilares em
 	      bolhas;
-	\item estudo e desenvolvimento de modelo em três dimensões e axisimétrico
+	\item estudo e desenvolvimento de modelo em três dimensões e axissimétrico
 	      para escoamentos multifásicos;
 	\item realização de experimentos computacionais de
 		  decomposição de biomassa e produção de gases com sedimentação
@@ -1119,7 +1201,7 @@ estes, as seguintes etapas foram realizadas com sucesso:
 		  e consumo de produtos;
 	\item validação dos modelos desenvolvidos para sistemas existentes com
 	      utilização de tecnologia de última geração;
-	\item estudo e desenvolvimento de modelos tridimensionais e axisimétricos
+	\item estudo e desenvolvimento de modelos tridimensionais e axissimétricos
 		  para simulação numérica de estrutura de não-equilíbrio em
 		  sistemas químicos, biológico e ambientais;
 \end{itemize}
@@ -1149,8 +1231,6 @@ Engenharia 3, durante a duração do projeto. Finalmente, a prestação de
 contas e a entrega do relatório final foram devidamente alocadas no
 final do período proposto deste projeto.  
 	
-\end{itemize}
-
 \section{Referências Bibliográficas}
 \bibliographystyle{plain}
 \bibliography{$HOME/projects/misc/latex/referencias}
